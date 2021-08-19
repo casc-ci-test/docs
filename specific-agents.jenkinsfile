@@ -28,6 +28,17 @@ pipeline {
             sh 'java -version'
         }
       }
-    }   
+    }
+    stage('Fourth Stage') {
+      agent { label 'maven' }
+      steps {
+        echo 'Hello World! from fourth stage'   
+        sh 'java -version'
+        container ('mavencontainer') {
+            echo 'Container maven version'
+            sh 'mvn --version'
+        }
+      }
+    } 
   }
 }
