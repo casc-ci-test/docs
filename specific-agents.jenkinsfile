@@ -1,0 +1,33 @@
+pipeline {
+  agent none
+  stages {
+    stage('First Stage') {
+      agent { label 'default' }
+      steps {
+        echo 'Hello World! from first stage, default-jnlp'   
+        sh 'java -version'
+      }
+    }
+    stage('Second Stage') {
+      agent { label 'nodejs' }
+      steps {
+        echo 'Hello World! from second stage, nodejs-app'   
+        sh 'java -version'
+        container ('nodejscontainer') {
+            sh 'node --version'
+        }
+      }
+    }    
+    stage('Third Stage') {
+      agent { label 'jdk11' }
+      steps {
+        echo 'Hello World! from third stage'   
+        sh 'java -version'
+        container ('jdk11container') {
+            echo 'Container java version'
+            sh 'java -version'
+        }
+      }
+    }   
+  }
+}
